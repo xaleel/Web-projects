@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+
+{% block body %}
+    <h2>My Listings</h2><hr>
+    {% if message %}
+            <div class="message" id="message" style="background-color: #7bff76;">{{ message }} <p onclick="getElementById('message').className='hidden'">X</p></div>
+    {% endif %}
+    <div class="cols">
+        {% for item in items %}
+            <div class="item">
+                {% if item.active %}
+                    <div class="active"><h6 style="color: #2d8d32; margin-right: 10px;"><strong>Active</strong></h6><h5>Title: {{ item.title }}</h5></div>
+                {% else %}
+                    <div class="active"><h6 style="color: #7e2b2b; margin-right: 10px;"><strong>Closed</strong></h6><h5>Title: {{ item.title }}</h5></div>
+                {% endif %}
+                {% if item.image %}
+                    <img src="{{ item.image }}" alt="Listing image" width="20%">
+                {% else %}
+                    <img src="https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg" alt="Listing image" width="20%">
+                {% endif %}
+                <p><strong>Description:</strong> {{ item.description }}</p>
+                <p><strong>Current price:</strong> ${{ item.price }}</p>
+                <form action="{% url 'listing' %}" method="post">{% csrf_token %}<input value="{{ item.id }}" name="id" type="hidden"><input type="submit" value="Details" class="details"></form>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

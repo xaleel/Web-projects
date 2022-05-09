@@ -1,0 +1,250 @@
+body {
+    padding: 0;
+    height: 100vh;
+}
+
+html {
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    margin: 0;
+    background: linear-gradient(to right, rgb(72, 182, 209), rgb(189, 227, 236));
+    border-bottom: 4px solid gray;
+    box-shadow: 0 2px 10px 1px rgb(0, 0, 0, 0.3);
+}
+
+header > .signed {
+    text-shadow: 0 0 4px rgb(219, 110, 110);
+}
+
+header > ul > li > a {
+    color: rgb(56, 56, 56);
+    font-size: 1.1rem;
+}
+
+header > h1 {
+    color: rgb(50, 50, 50);
+    text-shadow: 2px 2px 3px white;
+}
+
+header > h1:hover {
+    cursor: pointer;
+    color: rgb(172, 172, 172);
+    text-shadow: 2px 1px 4px rgb(25, 0, 255);
+}
+
+.main {
+    padding: 10px 10px 10px 40px;
+    height: 80%;
+}
+
+
+
+.form {
+    text-align: center;
+}
+
+.login {
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.login > form > .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+.login > form > .form-group > * {
+    margin: 5px auto;
+    text-align: center;
+}
+
+.form > form {
+    margin: 20px auto;
+    width: 40%;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto auto;
+    align-items: center;
+    justify-items: center;
+}
+
+.form > form > label {
+    margin: 10px;
+    font-size: 1.1rem;
+    justify-self: left;
+}
+
+.form > form > input, .form > form > textarea, .form > form > select {
+    width: 100%;
+}
+
+.form > form > textarea {
+    margin: 5px 0;
+}
+
+.cols {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.item {
+    flex-basis: 30%;
+    border: 4px solid lightgray;
+    border-radius: 1rem;
+    margin: 10px;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 4px 4px 10px 1px rgb(0, 0, 0, 0.2);
+    flex-grow: 0;
+}
+
+hr {
+    border-width:3px;
+}
+
+.cols > .item > button {
+    border: none;
+    background: none;
+    color: rgb(40, 103, 119);
+    right: 10px;
+    margin-bottom: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.shown {
+    display: block;
+}
+
+#comments {
+    justify-content: center;
+}
+
+.comment {
+    display: flex;
+    text-align: left;
+    padding: 10px;
+    flex-direction: column;
+    border: 1px solid gray;
+    width: 90%;
+    margin: 10px auto;
+}
+
+.comment > .date {
+    color: gray;
+    text-align: right;
+    margin-bottom: 3px;
+}
+
+img {
+    border: 1px solid lightgray;
+    border-radius: 0.2rem;
+}
+
+.nav-link {
+    padding: .5rem 0.5rem;
+}
+
+.message {
+    width: 95vw;
+    margin-bottom: 20px;
+    background-color: #ffc276;
+    font-size: 1.5rem;
+    box-shadow: 0 6px 9px -6px grey;
+}
+
+.message > p {
+    float: right;
+    margin-right: 1%;
+    margin-bottom: 0px;
+    font-weight: bold;
+}
+
+.message > p:hover {
+    cursor: pointer;
+    text-shadow: 0 0 4px white;
+}
+
+.listings {
+    display: grid;
+    grid-template-columns: 50% 40%;
+    grid-template-rows: auto;
+    text-align: center;
+    height: 100%;
+}
+
+.listings > * {
+    margin: 15px auto;
+}
+
+
+.details {
+    border-radius: 0.5rem;
+    border: 1px solid gray;
+    background-color: rgb(161, 226, 226, 0.4);
+    box-shadow: 3px 3px 7px -2px rgb(109, 108, 108, 0.5);
+}
+
+.details:hover {
+    background-color: rgba(109, 174, 228, 0.4);;
+}
+
+.bids {
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+
+.bids > * {
+    border: 1px solid lightgray;
+    margin: 5px;
+    padding: 10px
+}
+
+.cat-hide {
+    border-radius: 0.25rem;
+    border: 1px solid gray;
+    background-color: #ffcbcb;
+    box-shadow: 3px 3px 6px -1px #bbb;
+}
+
+.cat-hide:hover {
+    background-color: #e4a9a9;
+}
+
+.cat-show {
+    border-radius: 0.25rem;
+    border: 1px solid gray;
+    background-color: #aaf1ba;
+    box-shadow: 3px 3px 6px -1px #bbb;
+}
+
+.cat-show:hover {
+    background-color: #91dba2;
+}
+
+.active {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
