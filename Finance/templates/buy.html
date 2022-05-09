@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy
+{% endblock %}
+
+
+
+
+{% block main %}
+    <h3 style="font-size: 30px; color: #444444;"> Buy stocks </h3>
+    <h5>Popular companies</h5>
+    <button style= "margin: 5px" class="btn btn-outline-primary" value="GOOG" onclick="getElementById('symbol').value= this.value; getElementById('amount').type='number'; getElementById('submit').type='submit'; try{document.getElementsByClassName('btn btn-primary')[0].className='btn btn-outline-primary'}catch{}; this.className='btn btn-primary';">Google</button>
+    <button style= "margin: 5px" class="btn btn-outline-primary" value="AAPL" onclick="getElementById('symbol').value= this.value; getElementById('amount').type='number'; getElementById('submit').type='submit'; try{document.getElementsByClassName('btn btn-primary')[0].className='btn btn-outline-primary'}catch{}; this.className='btn btn-primary';">Apple</button>
+    <button style= "margin: 5px" class="btn btn-outline-primary" value="AMZN" onclick="getElementById('symbol').value= this.value; getElementById('amount').type='number'; getElementById('submit').type='submit'; try{document.getElementsByClassName('btn btn-primary')[0].className='btn btn-outline-primary'}catch{}; this.className='btn btn-primary';">Amazon</button>
+    <button style= "margin: 5px" class="btn btn-outline-primary" value="TSLA" onclick="getElementById('symbol').value= this.value; getElementById('amount').type='number'; getElementById('submit').type='submit'; try{document.getElementsByClassName('btn btn-primary')[0].className='btn btn-outline-primary'}catch{}; this.className='btn btn-primary';">Tesla</button>
+    <button style= "margin: 5px" class="btn btn-outline-primary" value="MSFT" onclick="getElementById('symbol').value= this.value; getElementById('amount').type='number'; getElementById('submit').type='submit'; try{document.getElementsByClassName('btn btn-primary')[0].className='btn btn-outline-primary'}catch{}; this.className='btn btn-primary';">Microsoft</button>
+    <button style= "margin: 5px" class="btn btn-outline-primary" value="FB" onclick="getElementById('symbol').value= this.value; getElementById('amount').type='number'; getElementById('submit').type='submit'; try{document.getElementsByClassName('btn btn-primary')[0].className='btn btn-outline-primary'}catch{}; this.className='btn btn-primary';">Facebook</button>
+    <button style= "margin: 5px" class="btn btn-outline-primary" value="T" onclick="getElementById('symbol').value= this.value; getElementById('amount').type='number'; getElementById('submit').type='submit'; try{document.getElementsByClassName('btn btn-primary')[0].className='btn btn-outline-primary'}catch{}; this.className='btn btn-primary';">AT&T</button>
+    <button style= "margin: 5px" class="btn btn-outline-primary" value="INTC" onclick="getElementById('symbol').value= this.value; getElementById('amount').type='number'; getElementById('submit').type='submit'; try{document.getElementsByClassName('btn btn-primary')[0].className='btn btn-outline-primary'}catch{}; this.className='btn btn-primary';">Intel</button>
+    <button style= "margin: 5px" class="btn btn-outline-primary" value="F" onclick="getElementById('symbol').value= this.value; getElementById('amount').type='number'; getElementById('submit').type='submit'; try{document.getElementsByClassName('btn btn-primary')[0].className='btn btn-outline-primary'}catch{}; this.className='btn btn-primary';">Ford Motor</button>
+    <button style= "margin: 5px" class="btn btn-outline-primary" value="SNAP" onclick="getElementById('symbol').value= this.value; getElementById('amount').type='number'; getElementById('submit').type='submit'; try{document.getElementsByClassName('btn btn-primary')[0].className='btn btn-outline-primary'}catch{}; this.className='btn btn-primary';">Snap</button>
+    <p></p>
+    <form action="/buy" method="post">
+        <input type="hidden" id="symbol" name="symbol" value=''>
+        <input type="hidden" id="amount" name="amount" placeholder="amount of shares" min="1" step="1">
+        <input class="btn btn-success" type="hidden" id="submit">
+    </form>
+    <p> </p>
+    <div style="clear: both">
+        <h5 style="display: inline;">Or manually input symbol</h5>
+        <div class="tooltipz"> (?)
+            <a class="tooltiptextz" href="https://stockanalysis.com/stocks/" target="top">A list of all symbols</a>
+        </div>
+    </div>
+    <p> </p>
+    <form action="/buy" method="post">
+        <input id="manual" type="text" id="symbolm" name="symbolm" placeholder="input symbol" onkeydown="return event.key != 'Enter';">
+        <input type="hidden" id="amountm" name="amountm" placeholder="amount of shares" min="1" step="1">
+        <input class="btn btn-success" type="hidden" id="sub">
+        <button type="button" style="display: inline" class="btn btn-danger" onclick="getElementById('sub').type='submit'; getElementById('amountm').type='number'; this.style='display: none'; getElementsByClassName('btn btn-primary').className='btn btn-outline-primary';">Confirm</button>
+    </form>
+    <hr>
+    <div style="clear: both">
+    {{ confirm|safe }}
+    </div>
+
+
+{% endblock %}

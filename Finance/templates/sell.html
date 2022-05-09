@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+    <table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Symbol</th>
+            <th scope="col">Name</th>
+            <th scope="col">Shares</th>
+            <th scope="col">Price</th>
+            <th scope="col">Shares to sell</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for element in stocks %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ element }}</td>
+                <td>{{ names[loop.index0] }}</td>
+                <td>{{ sh[loop.index0] }}</td>
+                <td>${{ prices[loop.index0] }}</td>
+                <td> <form method="post" action="/sell"><input type="hidden" value="{{ element }}" name="symbol"><input type="number" min="1" step="1" max="{{sh[loop.index0]}}" required name="amount"><input value = "Sell" class="btn btn-outline-success" style="margin-left: 6px; vertical-align: baseline; line-height: 1;" type="submit"></form> </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}
