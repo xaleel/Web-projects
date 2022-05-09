@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    How much?
+{% endblock %}
+
+{% block main %}
+    <h3 style="font-size: 40px; color: #444444;"> How much cash do you want? </h3>
+    <form action="/cash" method="post">
+        <button id="1k" class="btn btn-danger" type="submit">$1,000</button>
+        <input type="hidden" id="1k" name="1k" value="1000">
+    </form><p> </p><form action="/cash" method="post" value="10000">
+        <button id="10k" class="btn btn-warning" type="submit">$10,000</button>
+        <input type="hidden" id="10k" name="10k" value="10000">
+    </form><p> </p><form action="/cash" method="post" value="1000000">
+        <button id="1m" class="btn btn-success" type="submit">$1,000,000</button>
+        <input type="hidden" id="1m" name="1m" value="1000000">
+    </form>
+    <p> </p>
+    <button id="chs" class="btn btn-secondary" onclick="manual()">Input manually</button>
+    <form action="/cash" method="post">
+        <label id="manuall" for="manual" style="display:none; margin-left:device-width;">USD (between 100 and 100,000,000):</label>
+        <input autocomplete="off" value="100" autofocus class="slider" name="manualr" id="manualr" type="range" min="100" max="100000000" style="display:none" step="100" oninput="this.nextElementSibling.value = this.value">
+        <input autocomplete="off" value="100" autofocus class="form-control mx-auto w-auto" name="manual" id="manual" placeholder="Enter amount" type="number" min="100" max="100000000" style="display:none" step="100" oninput="this.previousElementSibling.value = this.value">
+        <p> </p>
+        <button class="btn btn-secondary mx-auto w-auto" type="submit" id="manualb" style="display:none; margin-left:device-width;">Submit</button>
+    </form>
+    <h4></h4>
+{% endblock %}

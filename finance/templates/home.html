@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+    <table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Symbol</th>
+            <th scope="col">Name</th>
+            <th scope="col">Shares</th>
+            <th scope="col">Price</th>
+            <th scope="col">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for element in stocks %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ element }}</td>
+                <td>{{ names[loop.index0] }}</td>
+                <td>{{ sh[loop.index0] }}</td>
+                <td>${{ prices[loop.index0] }}</td>
+                <td>${{ '%0.2f' % (sh[loop.index0] * prices[loop.index0])|float }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+        <th></th>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <th>Cash: ${{ cash }}</th>
+        </tr>
+        <tr>
+        <th></th>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <th>total: ${{ total }}</th>
+        </tr>
+    </tfoot>
+    </table>
+{% endblock %}
