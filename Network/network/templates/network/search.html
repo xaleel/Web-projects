@@ -1,0 +1,37 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+<div style="text-align: center;">
+    <h2>Search User</h2>
+    <div class="auth">
+        <form action="{% url 'search' %}" style="margin-bottom: 1rem;" method="post">
+            <span>Name or username:</span>
+            <input type="text" name="query" id="name" class="input-border" onkeydown="searchButton(event)">
+            <input type="submit" name="submit" value="Search" class="post-submit" id="srch-btn" disabled>
+        </form>
+    </div>
+    <hr>
+    <div class="following-followers">
+        {% if request.method == "POST" %}
+            <h3>Search results</h3>
+            {% for user in users %}
+                <br>
+                <div class="inline following-section">
+                    <div class="img-container">
+                        {% if user.pic %}
+                            <a href="/profile/{{ user.id }}"><img src="{{ user.pic }}" alt="profile_picture" class="post-profile-pic"></a>
+                        {% else %}
+                            <a href="/profile/{{ user.id }}"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png" alt="profile_picture" class="post-profile-pic"></a>
+                        {% endif %}
+                    </div>
+                    <h4 class="post-poster-name"> <a href="profile/{{ user.id }}">{{ user.name }}</a> </h4>
+                </div>
+            {% endfor %}
+            {% if no_res %}
+                <h2>Your search didn't return any results</h2>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

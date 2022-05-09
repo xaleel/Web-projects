@@ -1,0 +1,127 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <div class="profile">
+
+        <div class="sidebar">
+            <h1>{{ v_user.name }} 
+                {% if user.is_authenticated %}
+                    {% if self %}
+                        <a href="{% url 'setup' %}">Edit profile</a> 
+                    {% elif following %}
+                        <a href="/unfollow/{{ v_user.id }}">Unfollow</a> 
+                    {% else %}
+                        <a href="/follow/{{ v_user.id }}">Follow</a> 
+                    {% endif %}
+                {% endif %}
+            </h1>
+            {% if v_user.pic %}
+                <img src="{{ v_user.pic }}" alt="Profile Picture" class="pic-profile">
+            {% else %}
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png" alt="Profile Picture" class="pic-profile">
+            {% endif %}
+            <div class="inline-spaced" style="margin: 0 1.5rem;">
+                <h4>Following: {{ num_following }}</h4>
+                <h4>Followers: {{ num_followers }}</h4>
+            </div>
+            <h3 style="text-align: center;">{{ v_user.about }}</h3>
+            <p> <strong>Hobbies: </strong> {{ v_user.hobbies }}</p>
+            <p> <strong>Favorite music: </strong> {{ v_user.music }}</p>
+            <p> <strong>Favorite movies and TV shows: </strong> {{ v_user.movies }}</p>
+            <p> <strong>Favorite books: </strong> {{ v_user.books }}</p>
+            <p> <strong>Favorite quotes: </strong> {{ v_user.quotes }}</p>
+        </div>
+
+        <div class="posts-profile">
+            <h3>Posts ({{ post_count }}):</h3>
+            {% for post in posts %}
+            <div class="post" id="p{{ post.id }}" style="position: relative; margin: 2rem auto;">
+                <div class="inline">
+                    <div class="img-container">
+                        {% if post.poster.pic %}
+                            <a href="/profile/{{ post.poster.id }}"><img src="{{ post.poster.pic }}" alt="profile_picture" class="post-profile-pic"></a>
+                        {% else %}
+                            <a href="/profile/{{ post.poster.id }}"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png" alt="profile_picture" class="post-profile-pic"></a>
+                        {% endif %}
+                    </div>
+                    <h4 class="post-poster-name"> <a href="/profile/{{ post.poster.id }}">{{ post.poster.name }}</a> </h4>
+                </div>
+                <div class="options">
+                    <div class="options-buttons options-hidden" id="optionButtons{{ post.id }}">
+                        {% if post.poster.id == user.id %}
+                            <button type="submit" onClick="editPost(event)">Edit post</button>
+                            <form action="/deletePost/{{ post.id }}/" method="post"><button type="submit">Delete post</button></form>
+                        {% else %}
+                            <button>Report post</button>
+                        {% endif %}
+                    </div>
+                    <p class="dots" id="opB{{ post.id }}" onclick="options(event)">⋮</p>
+                </div>
+                <p>{{ post.text }}</p>
+                <div class="inline-spaced">
+                    <div>
+                        <div class="inline mgn-low">
+                            <p class="like" onclick="like(event, 'like')" id="like{{ post.id }}"> ♡ </p>
+                            <p class="like liked no-display" onclick="like(event, 'unlike')"  id="unlike{{ post.id }}"> ♥ </p>
+                            <p id="likeCount{{ post.id }}"> {{ post.like_count }} </p>
+                            <p class="comment-button" id="cd{{ post.id }}" onclick="displayComments(event)"> 💬 </p>
+                            <p id="commentCount{{ post.id }}"> {{ post.comment_count }} </p>
+                        </div>
+                    </div>
+                    <p class="post-timestamp">
+                        {% if post.private %}
+                        🔒
+                        {% else %}
+                        🌐
+                        {% endif %}
+                        <i>{{ post.timestamp }}</i>
+                    </p>
+                </div>
+                <div class="comments no-display" id="c{{ post.id }}">
+                    <div class="inline" style="margin-bottom: 1rem;">
+                        <img src="{{ user.pic }}" alt="profile_picture" class="post-profile-pic">
+                        <form action="{% url 'comment' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ user.id }}" name="commenter" id="acu{{ post.id }}">
+                            <input type="hidden" value="{{ post.id }}" name="post" id="acp{{ post.id }}">
+                            <textarea name="text" id="act{{ post.id }}" placeholder="Add comment"></textarea>
+                            <button>Comment</button>
+                        </form>
+                    </div>
+                    {% for comment in post.all_comments %}
+                        <div class="comments">
+                            <div class="options">
+                                <div class="options-buttons options-hidden" id="commentOptionButtons{{ comment.4 }}{{ post.id }}">
+                                    {% if comment.0 == user.id %}
+                                        <button>Delete comment</button>
+                                    {% else %}
+                                        <button>Delete comment</button>
+                                        <button>Report comment</button>
+                                    {% endif %}
+                                </div>
+                                <p class="dots {{ post.id }}" id="cOpB{{ comment.4 }}" onclick="commentOptions(event)">⋮</p>
+                            </div>
+                            <div class="inline">
+                                <a href="profile/{{ comment.0 }}"><img src="{{ comment.2 }}" alt="profile_picture" class="post-profile-pic"></a>
+                                <h4 class="post-poster-name"> <a href="profile/{{ comment.0 }}">{{ comment.1 }}</a> </h4>
+                            </div>
+                            <p>{{ comment.3 }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+            <div class="pagination">
+                {% if posts.has_previous %}
+                    <a class="page-button" href="?page=1">&lt&lt First</a>
+                    <a class="page-button" href="?page={{ posts.previous_page_number }}">&lt Previous</a>
+                {% endif %}
+                {% if posts.has_next %}
+                    <a class="page-button" href="?page={{ posts.next_page_number }}">Next &gt</a>
+                    <a class="page-button" href="?page={{ posts.paginator.num_pages }}">Last &gt&gt</a>
+                {% endif %}
+            </div> <br><br>
+        </div>
+    </div>
+
+{% endblock %}

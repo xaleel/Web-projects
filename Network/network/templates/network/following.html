@@ -1,0 +1,41 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <div class="following">
+        <div class="following-following">
+            <h3>Following</h3>
+            <br>
+            {% for user in following %}
+                <hr> <br>
+                <div class="inline following-section">
+                    <div class="img-container">
+                        {% if user.pic %}
+                            <a href="/profile/{{ user.id }}"><img src="{{ user.pic }}" alt="profile_picture" class="post-profile-pic"></a>
+                        {% else %}
+                            <a href="/profile/{{ user.id }}"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png" alt="profile_picture" class="post-profile-pic"></a>
+                        {% endif %}
+                    </div>
+                    <h4 class="post-poster-name"> <a href="profile/{{ user.id }}">{{ user.name }}</a> </h4>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="following-followers">
+            <h3>Followers</h3>
+            <br>
+            {% for user in followers %}
+                <hr> <br>
+                <div class="inline following-section">
+                    <div class="img-container">
+                        {% if user.pic %}
+                            <a href="/profile/{{ user.id }}"><img src="{{ user.pic }}" alt="profile_picture" class="post-profile-pic"></a>
+                        {% else %}
+                            <a href="/profile/{{ user.id }}"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png" alt="profile_picture" class="post-profile-pic"></a>
+                        {% endif %}
+                    </div>
+                    <h4 class="post-poster-name"> <a href="profile/{{ user.id }}">{{ user.name }}</a> </h4>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

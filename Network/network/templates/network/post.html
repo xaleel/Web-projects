@@ -1,0 +1,91 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+
+<div class="post" id="p{{ post.id }}" style="position: relative; margin: 2rem auto;">
+    <a href="/"><button class="post-submit" style="position: absolute; left: 0; top: -2.5rem;">🡐 Home</button></a>
+    <div class="inline">
+        <div class="img-container">
+            {% if post.poster.pic %}
+                <a href="/profile/{{ post.poster.id }}"><img src="{{ post.poster.pic }}" alt="profile_picture" class="post-profile-pic"></a>
+            {% else %}
+                <a href="/profile/{{ post.poster.id }}"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png" alt="profile_picture" class="post-profile-pic"></a>
+            {% endif %}
+        </div>
+        <h4 class="post-poster-name"> <a href="/profile/{{ post.poster.id }}">{{ post.poster.name }}</a> </h4>
+    </div>
+    <div class="options">
+        <div class="options-buttons options-hidden" id="optionButtons{{ post.id }}">
+            {% if post.poster.id == user.id %}
+                <button type="submit" onClick="editPost(event)">Edit post</button>
+                <form action="/deletePost/{{ post.id }}/" method="post"><button type="submit">Delete post</button></form>
+            {% else %}
+                <button>Report post</button>
+            {% endif %}
+        </div>
+        <p class="dots" id="opB{{ post.id }}" onclick="options(event)">⋮</p>
+    </div>
+    <p>{{ post.text }}</p>
+    <div class="inline-spaced">
+        <div>
+            <div class="inline mgn-low"  style="max-height: 3.2rem">
+                <p class="like" onclick="like(event, 'like')" id="like{{ post.id }}"> ♡ </p>
+                <p class="like liked no-display" onclick="like(event, 'unlike')"  id="unlike{{ post.id }}"> ♥ </p>
+                <p id="likeCount{{ post.id }}"> {{ post.like_count }} </p>
+                <p class="comment-button" id="cd{{ post.id }}" onclick="displayComments(event)"> 💬 </p>
+                <p id="commentCount{{ post.id }}"> {{ post.comment_count }} </p>
+            </div>
+        </div>
+        <p class="post-timestamp">
+            {% if post.private %}
+            🔒
+            {% else %}
+            🌐
+            {% endif %}
+            <i>{{ post.timestamp }}</i>
+        </p>
+    </div>
+    <div class="comments no-display" id="c{{ post.id }}">
+        <div class="inline" style="margin-bottom: 1rem;">
+            <div class="img-container">
+                <img src="{{ user.pic }}" alt="profile_picture" class="post-profile-pic">
+            </div>
+            <form action="{% url 'comment' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" value="{{ user.id }}" name="commenter" id="acu{{ post.id }}">
+                <input type="hidden" value="{{ post.id }}" name="post" id="acp{{ post.id }}">
+                <textarea name="text" id="act{{ post.id }}" placeholder="Add comment"></textarea>
+                <button>Comment</button>
+            </form>
+        </div>
+        {% for comment in post.all_comments %}
+            <div class="comments">
+                <div class="options">
+                    <div class="options-buttons options-hidden" id="commentOptionButtons{{ comment.4 }}{{ post.id }}">
+                        {% if comment.0 == user.id %}
+                            <button>Delete comment</button>
+                        {% else %}
+                            <button>Delete comment</button>
+                            <button>Report comment</button>
+                        {% endif %}
+                    </div>
+                    <p class="dots {{ post.id }}" id="cOpB{{ comment.4 }}" onclick="commentOptions(event)">⋮</p>
+                </div>
+                <div class="inline">
+                    <div class="img-container">
+                        {% if comment.2 %}
+                            <a href="/profile/{{ comment.0 }}"><img src="{{ comment.2 }}" alt="profile_picture" class="post-profile-pic"></a>
+                        {% else %}
+                            <a href="/profile/{{ comment.0 }}"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png" alt="profile_picture" class="post-profile-pic"></a>
+                        {% endif %}
+                    </div>
+                    <h4 class="post-poster-name"> <a href="/profile/{{ comment.0 }}">{{ comment.1 }}</a> </h4>
+                </div>
+                <p>{{ comment.3 }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Social Network{% endblock %}</title>
+        <link href="{% static 'network/styles.css' %}" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+        <script src="{% static 'network/scripts.js' %}"></script>
+        <!-- prevents form resubmission on refresh/back -->
+        <script>
+            if ( window.history.replaceState ) {
+                window.history.replaceState( null, null, window.location.href );
+            }
+        </script>
+        <!-- -->
+    </head>
+    <body>  
+        <nav class="navbar">
+            <a class="white hover-shadow" href="{% url 'index' %}"><h2>Network</h2></a>
+            
+            {% if name %}
+                <a class="nav-link white hover-shadow" href="{% url 'profile' %}">
+                    <h3 class="no-margin white" id="username">{{ name }}</h3>
+                </a>
+            {% endif %}
+
+            <div>
+                {% if user.is_authenticated %}
+                    <a class="nav-link white hover-shadow" href="{% url 'profile' %}">Profile</a>
+                    <a class="nav-link white hover-shadow" href="{% url 'search' %}">Search</a>
+                    <a class="nav-link white hover-shadow" href="{% url 'following' %}">Following</a>
+                    <a id="logout" class="nav-link white hover-shadow" href="{% url 'logout' %}">Log Out</a>
+                {% else %}
+                    <a class="nav-link white hover-shadow" href="{% url 'login' %}">Log In</a>
+                    <a class="nav-link white hover-shadow" href="{% url 'register' %}">Register</a>
+                {% endif %}
+              </ul>
+            </div>
+          </nav>
+        
+        <div class="body">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

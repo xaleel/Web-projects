@@ -1,0 +1,21 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+    <div class="form-div">
+        <h3>Profile set up</h3>
+        <form action="{% url 'setup' %}" method="post" class="form1">
+            {% csrf_token %}
+            <label> Name*: </label> <input value="{{ user.name }}" type="text" name="name" id="name" required>
+            <label> Profile Picture: (URL)</label> <input value="{{ user.pic }}" type="text" name="pic" id="pic">
+            <label> About*: </label> <textarea name="about" id="about" required>{{ user.about }}</textarea>
+            <label> Hobbies & Interests: </label> <input value="{{ user.hobbies }}" type="text" name="hobbies" id="hobbies">
+            <label> Favorite Music: </label> <input value="{{ user.music }}" type="text" name="music" id="music">
+            <label> Favorite Movies & TV Shows: </label> <input value="{{ user.movies }}" type="text" name="movies" id="movies">
+            <label> Favorite Books: </label> <input value="{{ user.books }}" type="text" name="books" id="books">
+            <label> Favorite quotes: </label> <textarea name="quotes" id="quotes">{{ user.quotes }}</textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>  
+
+{% endblock %}
